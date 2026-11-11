@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-label="Crateless — configure your ROG Azoth in the browser">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b0c0f"/>
+      <stop offset="1" stop-color="#16181e"/>
+    </linearGradient>
+    <linearGradient id="rgb" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ff2bd6"/>
+      <stop offset=".2" stop-color="#3d3bff"/>
+      <stop offset=".4" stop-color="#14d3e0"/>
+      <stop offset=".6" stop-color="#2ee05a"/>
+      <stop offset=".8" stop-color="#ffd21f"/>
+      <stop offset="1" stop-color="#ff3b47"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#ff3b47" stop-opacity=".35"/>
+      <stop offset="1" stop-color="#ff3b47" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="keys" width="34" height="34" patternUnits="userSpaceOnUse">
+      <rect x="3" y="3" width="28" height="28" rx="6" fill="#fff" fill-opacity=".9"/>
+    </pattern>
+    <mask id="kmask">
+      <rect x="760" y="70" width="460" height="230" fill="url(#keys)"/>
+    </mask>
+    <linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0b0c0f" stop-opacity="1"/>
+      <stop offset=".35" stop-color="#0b0c0f" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="360" rx="24" fill="url(#bg)"/>
+  <ellipse cx="990" cy="185" rx="330" ry="170" fill="url(#glow)"/>
+  <rect x="760" y="70" width="460" height="230" fill="url(#rgb)" mask="url(#kmask)" opacity=".85"/>
+  <rect x="1" y="1" width="1278" height="358" rx="23" fill="none" stroke="#272b34" stroke-width="2"/>
+  <g font-family="'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif">
+    <text x="80" y="128" fill="#8a909b" font-size="20" letter-spacing="4">UNOFFICIAL · WEBHID · ZERO INSTALL</text>
+    <text x="76" y="212" fill="#e8eaee" font-size="88" font-weight="700" letter-spacing="-2">Crateless</text>
+    <rect x="80" y="236" width="120" height="6" rx="3" fill="url(#rgb)"/>
+    <text x="80" y="286" fill="#c4c8d0" font-size="26">Configure your ROG Azoth in the browser —</text>
+    <text x="80" y="320" fill="#c4c8d0" font-size="26">without installing a crate full of software.</text>
+  </g>
+</svg>

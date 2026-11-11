@@ -1,0 +1,10 @@
+node_modules/
+dist/
+__pycache__/
+# vendor artwork extracted locally by tools/fetch_rog_banners.py: never commit
+public/rog-assets/
+legacy/assets/
+
+# old single-file prototype, superseded by src/
+legacy/
+tools/serve.py

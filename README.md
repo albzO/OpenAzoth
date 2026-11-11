@@ -1,6 +1,8 @@
 # Crateless
 
-**English** · [中文](#中文)
+**English** · [中文](README.zh-CN.md)
+
+**Open it:** https://albzo.github.io/Crateless/
 
 > Configure your ROG Azoth without installing a crate full of software.
 
@@ -25,6 +27,7 @@ The settings live in the keyboard itself. A browser can send them over WebHID di
 | Key mapping | Remap any key to another key, a media key or a mouse button; written instantly |
 | Power | Low-battery warning, power saving, sleep timeout (current values read from the keyboard) |
 | Sync settings | Write everything recorded here back to the keyboard (one profile or all six) |
+| Reset | Factory-reset lighting, key mapping, one profile or all profiles |
 | Status | Firmware, battery / charging / voltage, receiver, active profile, updated live |
 | Languages | 中文 / English |
 
@@ -34,7 +37,7 @@ The settings live in the keyboard itself. A browser can send them over WebHID di
 
 - Browser: **desktop Chrome or Edge** (WebHID is required).
 - The first time, click *Connect keyboard* and pick ROG AZOTH (cable) or ROG OMNI RECEIVER (wireless). After that it connects automatically.
-- The keyboard can't report key maps, lighting colors or OLED content, so the page keeps what you set, per profile, in the browser.
+- The keyboard can't report key maps, lighting colors or OLED content, so the page keeps what you set in the browser, per keyboard (by serial number) and per profile.
 
 ## Development
 
@@ -73,23 +76,3 @@ Files go to `public/rog-assets/`, which is git-ignored. The keyboard always show
 ## License
 
 MIT
-
----
-
-## 中文
-
-> 不装全家桶，也能设置你的 ROG Azoth。
-
-Crateless 是一个**纯网页**的 ROG Azoth 设置工具：打开网页、点"连接键盘"，就能改灯效、OLED、按键映射和电源设置。不需要安装任何程序，也没有后台常驻服务。
-
-**非官方项目，与 ASUS 无关。** "ROG"、"Azoth" 是其各自所有者的商标，这里只用来说明适用的设备。
-
-**支持的设备：** 仅限初代 ROG Azoth（有线、原装 2.4G 接收器或 Omni 接收器）。不支持 Azoth Extreme、Azoth X、Azoth 96 HE。
-
-**为什么做这个：** 官方网页设置工具对 Azoth 走"Legacy Mode"，必须先安装电脑端的 Companion 才能改设置。实测 Companion 运行时是 7 个后台进程、约 136 MB 私有内存，还带内核过滤驱动和托盘程序。而这些设置本来就存在键盘里，浏览器通过 WebHID 直接发给键盘就够了。
-
-**功能：** 灯效（10 种，选项与官方一致，即时生效）、OLED（预设动画、GIF/图片上传、自定义横幅、日期时间）、按键映射、电源设置、同步设置、实时状态、中英双语。
-
-**不支持：** 系统信息、音乐频谱、系统通知、软件宏——这些需要电脑端程序持续提供数据。
-
-**使用：** 用 Chrome 或 Edge 桌面版打开，第一次点"连接键盘"选择设备，之后会自动连接。开发说明见上方英文部分。

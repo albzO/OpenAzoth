@@ -3,6 +3,7 @@
 How this was worked out: by watching what the official configurator sends to the keyboard and
 replaying exactly those packets. Every command below was verified on real hardware (wired, ROG 2.4G
 and Omni receiver). No unknown command numbers were probed and nothing touches firmware updates.
+
 Reference:
 - gearlink.asus.com device page `/view/6787/` v1.00.22 (WebHID): `setOledCustomImageBW`,
   `processFrameTo16ColorGrayBytes`, `getKeyboardDeviceInfo`, crop settings `Es=208, Ts=64, Fs=196`

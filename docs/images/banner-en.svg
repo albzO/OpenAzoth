@@ -16,11 +16,11 @@
       <stop offset="0" stop-color="#ff3b47" stop-opacity=".35"/>
       <stop offset="1" stop-color="#ff3b47" stop-opacity="0"/>
     </radialGradient>
-    <pattern id="keys" width="34" height="34" patternUnits="userSpaceOnUse">
+    <pattern id="keys" x="760" y="78" width="34" height="34" patternUnits="userSpaceOnUse">
       <rect x="3" y="3" width="28" height="28" rx="6" fill="#fff" fill-opacity=".9"/>
     </pattern>
     <mask id="kmask">
-      <rect x="760" y="70" width="460" height="230" fill="url(#keys)"/>
+      <rect x="760" y="78" width="442" height="204" fill="url(#keys)"/>
     </mask>
     <linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#0b0c0f" stop-opacity="1"/>
@@ -28,10 +28,10 @@
     </linearGradient>
   </defs>
   <rect width="1280" height="360" rx="24" fill="url(#bg)"/>
-  <ellipse cx="990" cy="185" rx="330" ry="170" fill="url(#glow)"/>
-  <rect x="760" y="70" width="460" height="230" fill="url(#rgb)" mask="url(#kmask)" opacity=".85"/>
+  <ellipse cx="981" cy="180" rx="330" ry="170" fill="url(#glow)"/>
+  <rect x="760" y="78" width="442" height="204" fill="url(#rgb)" mask="url(#kmask)" opacity=".85"/>
   <rect x="1" y="1" width="1278" height="358" rx="23" fill="none" stroke="#272b34" stroke-width="2"/>
-  <g font-family="'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif">
+  <g transform="translate(0,-40)" font-family="'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif">
     <text x="80" y="128" fill="#8a909b" font-size="20" letter-spacing="4">UNOFFICIAL · WEBHID · ZERO INSTALL</text>
     <text x="76" y="212" fill="#e8eaee" font-size="88" font-weight="700" letter-spacing="-2">Crateless</text>
     <rect x="80" y="236" width="120" height="6" rx="3" fill="url(#rgb)"/>

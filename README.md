@@ -62,7 +62,7 @@ Dependencies only point one way: `ui → state → devices → hid`. The protoco
 
 ### Vendor artwork
 
-The banner patterns and preset-animation previews are ASUS artwork. They are **not in this repository and not deployed**; without them the page draws approximations. For a faithful local preview, run:
+The banner patterns and preset-animation previews are ASUS artwork and are **not in this repository**. The deploy workflow downloads the still images (banner strips and one frame per preset) at build time; without them the page draws approximations. For the full animated previews locally, run:
 
 ```bash
 python tools/fetch_rog_banners.py

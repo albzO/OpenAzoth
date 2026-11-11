@@ -25,6 +25,11 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
+      # ASUS preview stills (banner strips + preset thumbnails) for the deployed site; never committed.
+      # If ASUS changes their page, deploy anyway: the preview falls back to approximations.
+      - name: Fetch preview stills
+        run: python3 tools/fetch_rog_banners.py --static
+        continue-on-error: true
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:

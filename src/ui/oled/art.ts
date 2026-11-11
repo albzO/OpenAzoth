@@ -1,7 +1,8 @@
 /**
  * Drawing for the OLED preview: banner pattern strips, clock, placeholders.
- * Original vendor artwork is NOT shipped. If a developer runs tools/fetch_rog_banners.py locally,
- * the files land in public/rog-assets/ (git-ignored) and are used for a faithful preview.
+ * Vendor artwork is not in the repository. tools/fetch_rog_banners.py puts it in public/rog-assets/
+ * (git-ignored): locally with the animations, and at deploy time with --static (still images only).
+ * Without it the preview falls back to approximations.
  */
 import { signal } from '@preact/signals';
 import { OLED_H, OLED_W, PRESET_COUNT, BANNER_PATTERN_COUNT } from '../../devices/azoth/oled';
@@ -91,12 +92,17 @@ export function drawClock(ctx: Ctx, use24h: boolean, now = new Date()): void {
   ctx.textAlign = 'left';
 }
 
-// ---- preset animations (optional local artwork)
+// ---- preset animations (optional artwork: animated GIF locally, still JPG when deployed)
 const presetCache: (Promise<DecodedFrame[] | null> | undefined)[] = Array(PRESET_COUNT);
-export function loadPresetFrames(i: number): Promise<DecodedFrame[] | null> {
-  presetCache[i] ??= fetch(assetUrl(`preset-${i}.gif`))
+/** Decode an optional artwork file; null when it isn't there (the dev server answers index.html). */
+function loadFrames(name: string, type: string): Promise<DecodedFrame[] | null> {
+  return fetch(assetUrl(name))
     .then((r) => (r.ok && (r.headers.get('content-type') ?? '').includes('image') ? r.blob() : null))
-    .then((b) => (b ? decodeImage(new Blob([b], { type: 'image/gif' })).then((d) => d.frames) : null))
+    .then((b) => (b ? decodeImage(new Blob([b], { type })).then((d) => d.frames) : null))
     .catch(() => null);
+}
+
+export function loadPresetFrames(i: number): Promise<DecodedFrame[] | null> {
+  presetCache[i] ??= loadFrames(`preset-${i}.gif`, 'image/gif').then((f) => f ?? loadFrames(`preset-${i}.jpg`, 'image/jpeg'));
   return presetCache[i]!;
 }

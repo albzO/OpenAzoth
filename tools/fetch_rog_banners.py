@@ -3,11 +3,12 @@
 Extract the OLED banner pattern strips and the 6 preset animations from ASUS Gear Link's Azoth
 page for LOCAL preview use.
 
-The images are ASUS assets: they are downloaded to public/rog-assets/ on your own machine and are
-git-ignored, never committed or redistributed. The keyboard itself always draws the original
-pattern from its firmware; these files only make the browser preview look the same.
+The images are ASUS assets. They go to public/rog-assets/, which is git-ignored and never committed.
+The keyboard itself always draws the originals from its firmware; these files only make the browser
+preview look the same.
 
-Usage:  python tools/fetch_rog_banners.py
+Usage:  python tools/fetch_rog_banners.py            banners, preset stills and animated GIFs
+        python tools/fetch_rog_banners.py --static   banners and preset stills only (used for deploys)
 """
 import base64
 import json
@@ -41,6 +42,7 @@ def asset(main_js: str, filename: str) -> bytes:
 
 
 def main():
+    still_only = "--static" in sys.argv[1:]
     manifest = json.loads(get(f"{BASE}/manifest.json"))
     main_js = get(f"{BASE}/main-{manifest['version']}-{manifest['bundleId']}.js").decode("utf-8", "replace")
     OUT.mkdir(parents=True, exist_ok=True)
@@ -56,7 +58,7 @@ def main():
     if not lst:
         sys.exit("preset animation list not found")
     for i, jpg in enumerate(re.findall(r'path:"([^"]+)"', lst.group(0))):
-        for ext in ("gif", "jpg"):
+        for ext in ("jpg",) if still_only else ("gif", "jpg"):
             name = jpg.rsplit(".", 1)[0] + "." + ext
             data = asset(main_js, name)
             (OUT / f"preset-{i}.{ext}").write_bytes(data)

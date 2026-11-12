@@ -5,7 +5,8 @@ export const en: Record<MessageKey, string> = {
   // app
   'app.name': 'Crateless',
   'app.tagline': 'for ROG Azoth · unofficial · basic settings without BS',
-  'app.description': 'Configure the ROG Azoth keyboard in your browser, without installing anything. Unofficial, not affiliated with ASUS.',
+  'app.title': 'Crateless — ROG Azoth Web Configurator (no Armoury Crate)',
+  'app.description': 'Crateless: configure the ROG Azoth keyboard in Chrome or Edge over WebHID. Lighting, OLED screen (GIF upload, canvas editor), key mapping, power settings. No Armoury Crate needed. Unofficial, not affiliated with ASUS.',
   'app.noHid.title': "This browser doesn't support WebHID",
   'app.noHid.body': 'Open this page in desktop Chrome or Edge.',
   'app.connect.title': 'Connect your Azoth',

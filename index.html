@@ -3,11 +3,43 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Configure the ROG Azoth keyboard in your browser, without installing anything. Unofficial, not affiliated with ASUS." />
-    <title>Crateless — ROG Azoth</title>
+    <title>Crateless — ROG Azoth Web Configurator (WebHID, no Armoury Crate)</title>
+    <meta name="description" content="Crateless: configure the ROG Azoth keyboard in Chrome or Edge over WebHID. Lighting, OLED screen with GIF upload and a canvas editor, key mapping, power settings. No Armoury Crate, no companion app. Unofficial, not affiliated with ASUS. 网页版 ROG Azoth 设置工具。" />
+    <link rel="canonical" href="https://albzo.github.io/Crateless/" />
+    <meta name="theme-color" content="#0d0f12" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Crateless" />
+    <meta property="og:title" content="Crateless — ROG Azoth Web Configurator" />
+    <meta property="og:description" content="Configure the ROG Azoth keyboard in your browser over WebHID: lighting, OLED GIFs, key mapping, power. No Armoury Crate needed." />
+    <meta property="og:url" content="https://albzo.github.io/Crateless/" />
+    <meta property="og:image" content="https://raw.githubusercontent.com/albzO/Crateless/main/docs/images/lighting-en.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Crateless",
+        "alternateName": ["Crateless ROG Azoth", "ROG Azoth Web Configurator"],
+        "url": "https://albzo.github.io/Crateless/",
+        "description": "Unofficial browser-based (WebHID) configurator for the ROG Azoth keyboard: lighting, OLED screen, key mapping and power settings without Armoury Crate.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Windows, macOS, Linux (Chrome or Edge)",
+        "browserRequirements": "Requires WebHID (desktop Chrome or Edge)",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "codeRepository": "https://github.com/albzO/Crateless",
+        "license": "https://opensource.org/licenses/MIT"
+      }
+    </script>
   </head>
   <body>
     <div id="app"></div>
+    <noscript>
+      <h1>Crateless — ROG Azoth Web Configurator</h1>
+      <p>Configure the ROG Azoth keyboard in your browser over WebHID: lighting, OLED screen (GIF upload, canvas editor), key mapping and power settings, without Armoury Crate. Requires JavaScript and desktop Chrome or Edge.</p>
+      <p><a href="https://github.com/albzO/Crateless">Source code on GitHub</a></p>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

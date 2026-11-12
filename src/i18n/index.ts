@@ -29,7 +29,7 @@ export function t(key: MessageKey, params?: Record<string, string | number>): st
 function applyDocument(): void {
   if (typeof document === 'undefined') return;
   document.documentElement.lang = lang.value === 'zh' ? 'zh-CN' : 'en';
-  document.title = `${t('app.name')} — ROG Azoth`;
+  document.title = t('app.title');
   document.querySelector('meta[name="description"]')?.setAttribute('content', t('app.description'));
 }
 

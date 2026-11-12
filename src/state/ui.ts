@@ -1,7 +1,7 @@
 /** Navigation state of the app (not persisted). */
 import { signal } from '@preact/signals';
 
-export type Page = 'profile' | 'sync' | 'power' | 'device';
+export type Page = 'profile' | 'sync' | 'power' | 'editor' | 'device';
 export type ProfileTab = 'lighting' | 'oled' | 'keys';
 
 export const page = signal<Page>('profile');

@@ -9,6 +9,7 @@ import { ProfilePage } from './ProfilePage';
 import { PowerPage } from './power/PowerPage';
 import { DevicePage } from './device/DevicePage';
 import { SyncPage } from './sync/SyncPage';
+import { EditorPage } from './editor/EditorPage';
 
 function Placeholder() {
   if (!hidAvailable())
@@ -35,6 +36,7 @@ export function App() {
   const blocked = connected && !online.value ? 'blocked' : '';
   let body;
   if (page.value === 'device') body = <DevicePage />;
+  else if (page.value === 'editor') body = <EditorPage />;
   else if (!connected) body = <Placeholder />;
   else if (page.value === 'sync') body = <SyncPage />;
   else if (page.value === 'power') body = <div class={blocked}><PowerPage /></div>;

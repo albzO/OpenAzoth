@@ -6,7 +6,7 @@ import { t, type MessageKey } from '../../i18n';
 import { Card, Row, Seg } from '../common/controls';
 import { OledPreview, type Scene } from './OledPreview';
 import {
-  BannerPanel, ClockPanel, ImagePanel, PresetPanel, bannerScene, clockScene, imageInteraction, imageScene, useImageState, usePresetScene,
+  BannerPanel, ClockPanel, ImagePanel, LibraryPanel, PresetPanel, bannerScene, clockScene, imageInteraction, imageScene, useImageState, usePresetScene,
 } from './panels';
 
 const MODES: OledMode[] = ['preset', 'image', 'banner', 'clock'];
@@ -84,6 +84,7 @@ export function OledTab() {
 
       {oled.mode === 'preset' && <PresetPanel />}
       {oled.mode === 'image' && <ImagePanel st={image} />}
+      {oled.mode === 'image' && <LibraryPanel st={image} />}
       {oled.mode === 'banner' && <BannerPanel />}
       {oled.mode === 'clock' && <ClockPanel />}
       <p class="hint">{t('oled.unsupported')}</p>

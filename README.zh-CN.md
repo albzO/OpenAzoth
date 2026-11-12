@@ -42,7 +42,7 @@ Crateless 是一个**纯网页**的 ROG Azoth 设置工具：打开网页、点�
     <td width="50%" valign="top">
       <img src="docs/images/oled-zh.png" alt="OLED 屏幕设置">
       <h3>OLED 屏幕</h3>
-      内置预设动画、上传 GIF/图片（16 级灰度，最多 196 帧）、自定义横幅、日期时间、开关和亮度。
+      内置预设动画、上传 GIF/图片（16 级灰度，最多 196 帧）、自定义横幅、日期时间、开关和亮度。图片可存进图片库，之后一键换回。
     </td>
     <td width="50%" valign="top">
       <img src="docs/images/keys-zh.png" alt="按键映射">
@@ -68,6 +68,7 @@ Crateless 是一个**纯网页**的 ROG Azoth 设置工具：打开网页、点�
 
 | | |
 |---|---|
+| ✎ **画布编辑器** | 在 208×64 屏幕上叠放多张图片和 GIF：拖动、缩放、旋转、镜像、调 gamma，带可裁剪的时间轴。可上传、存进图片库或下载成 GIF，不接键盘也能用 |
 | 📟 **实时状态** | 固件、电量/充电/电压、接收器、当前 profile |
 | 🌐 **语言** | 中文 / English |
 
@@ -124,7 +125,7 @@ flowchart LR
 src/
   hid/            WebHID 传输层（与设备无关）：收发/应答/队列、分包上传、设备发现
   devices/azoth/  Azoth 协议，全部是纯函数：设备信息、灯效、按键、OLED、电源
-  media/          图像处理：GIF 解码、16 级灰度、横幅文字排版
+  media/          图像处理：GIF 解码/编码、16 级灰度、图层合成、横幅文字排版
   state/          应用状态（@preact/signals）：连接与实时状态、各 profile 设置、操作、同步
   i18n/           中英文词典，以及协议值的显示名称
   ui/             Preact 组件
@@ -148,7 +149,7 @@ python tools/fetch_rog_banners.py
 
 </details>
 
-协议笔记：[docs/PROTOCOL.md](docs/PROTOCOL.md)
+协议笔记：[docs/PROTOCOL.md](docs/PROTOCOL.md) · 更新日志：[CHANGELOG.md](CHANGELOG.md)
 
 ## 许可证
 

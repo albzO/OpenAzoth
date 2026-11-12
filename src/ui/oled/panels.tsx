@@ -6,12 +6,16 @@ import { toGreyFrames } from '../../media/decode';
 import { drawPlaced, imageBinary, pack4, type FitMode, type Placement } from '../../media/gray4';
 import { current, deviceSerial, selectedProfile, updateCurrent } from '../../state/profiles';
 import {
-  applyPreset, commitPlacement, dragImage, ensureImageLoaded, imageDocFor, imageError, loadImageFile, setImageAdjust,
+  applyPreset, commitPlacement, dragImage, ensureImageLoaded, imageDocFor, imageError, imageSourceOf, loadImageFile, setImageAdjust,
   setZoomPercent, zoomImage, zoomPercent,
 } from '../../state/oledImage';
-import { clockAutoSync, setClockAutoSync, showClock, showPreset, uploadBanner, uploadImage } from '../../state/actions';
+import { applyLibraryEntry, clockAutoSync, setClockAutoSync, showClock, showPreset, uploadBanner, uploadImage } from '../../state/actions';
+import { ensureLibrary, library, removeFromLibrary, saveToLibrary, signature } from '../../state/imageLibrary';
+import { addEditorSource } from '../../state/editor';
+import { toast } from '../../state/feedback';
+import { page } from '../../state/ui';
 import { device } from '../../state/connection';
-import { Card, Row, Seg } from '../common/controls';
+import { Card, ConfirmButton, Row, Seg } from '../common/controls';
 import { artRevision, assetUrl, drawClock, drawMessage, drawPattern, hasPatternArt, loadPresetFrames } from './art';
 import type { PreviewInteraction, Scene } from './OledPreview';
 import { t, type MessageKey } from '../../i18n';
@@ -196,8 +200,79 @@ export function ImagePanel({ st }: { st: ImageStateHook }) {
         >
           {t('upload.button')}
         </button>
+        <button
+          disabled={!st.doc}
+          title={t('image.openEditorHint')}
+          onClick={async () => {
+            const d = st.doc!;
+            if (await addEditorSource(d.bytes, d.type, d.name, { placement: d.committed, gamma: d.gamma, invert: d.invert })) page.value = 'editor';
+          }}
+        >
+          {t('image.openEditor')}
+        </button>
         {progress && <progress value={progress[0]} max={progress[1]} />}
       </Row>
+    </Card>
+  );
+}
+
+/** Images saved on purpose, shared by all profiles: put one back with a click. */
+export function LibraryPanel({ st }: { st: ImageStateHook }) {
+  useEffect(() => void ensureLibrary(), []);
+  const items = library.value;
+  const [busy, setBusy] = useState<{ id: string; pct: number } | null>(null);
+  const doc = st.doc;
+  const currentSig = useMemo(() => (doc ? signature(imageSourceOf(doc)) : null), [doc?.bytes, doc?.committed, doc?.invert, doc?.gamma]);
+  const saved = !!items?.some((e) => e.sig === currentSig);
+  return (
+    <Card
+      title={t('library.title')}
+      sub={t('library.sub')}
+      actions={
+        <button
+          disabled={!doc || !st.frames || saved}
+          onClick={async () => {
+            const ok = await saveToLibrary(imageSourceOf(doc!), st.frames![0].levels, st.frames!.length);
+            toast(t(ok ? 'library.saved' : 'library.duplicate'));
+          }}
+        >
+          {saved ? t('library.alreadySaved') : t('library.save')}
+        </button>
+      }
+    >
+      {!items?.length ? (
+        <p class="hint">{t('library.empty')}</p>
+      ) : (
+        <div class="library">
+          {items.map((e) => (
+            <div key={e.id} class={`lib-item ${e.sig === currentSig ? 'sel' : ''}`}>
+              <button class="lib-thumb" title={t('library.useHint')} disabled={!!busy} onClick={() => void applyLibraryEntry(e, false)}>
+                <img src={e.thumb} alt="" />
+              </button>
+              <div class="lib-meta">
+                <span class="lib-name" title={e.name}>{e.name}</span>
+                <span class="muted">{e.frames > 1 ? t('library.frames', { n: e.frames }) : t('library.still')}</span>
+              </div>
+              <div class="lib-actions">
+                <button
+                  title={t('library.uploadHint')}
+                  disabled={!device.value || !!busy}
+                  onClick={async () => {
+                    setBusy({ id: e.id, pct: 0 });
+                    await applyLibraryEntry(e, true, (i, n) => setBusy({ id: e.id, pct: Math.round((i / n) * 100) }));
+                    setBusy(null);
+                  }}
+                >
+                  {busy?.id === e.id ? `${busy.pct}%` : t('library.upload')}
+                </button>
+                <ConfirmButton disabled={!!busy} onConfirm={() => void removeFromLibrary(e.id)}>
+                  {t('library.delete')}
+                </ConfirmButton>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </Card>
   );
 }

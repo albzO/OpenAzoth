@@ -7,6 +7,7 @@ import { t, type MessageKey } from '../i18n';
 const GLOBAL_PAGES: [Page, string, MessageKey][] = [
   ['sync', '⟳', 'nav.sync'],
   ['power', '⚡', 'nav.power'],
+  ['editor', '✎', 'nav.editor'],
   ['device', 'ⓘ', 'nav.device'],
 ];
 

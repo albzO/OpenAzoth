@@ -103,21 +103,47 @@ export async function ensureImageLoaded(profile: number): Promise<void> {
   }
 }
 
-export async function loadImageFile(profile: number, file: File): Promise<void> {
+/** An image with its settings, as stored per profile and in the image library. */
+export type ImageSource = StoredDoc;
+
+/** Replace a profile's image with a source (file bytes + settings). Returns the new document. */
+export async function setImageSource(profile: number, src: ImageSource): Promise<ImageDoc | null> {
   imageError.value = '';
   try {
-    const bytes = new Uint8Array(await file.arrayBuffer());
-    const img = await decodeImage(new Blob([bytes], { type: file.type }));
-    const p = presetPlacement(img.frames[0].bitmap, 'crop');
-    imageDocs.value = {
-      ...imageDocs.value,
-      [docKey(profile)]: { name: file.name, type: file.type, bytes, img, preset: 'crop', placement: p, committed: p, invert: false, gamma: 1 },
-    };
+    const img = await decodeImage(new Blob([src.bytes], { type: src.type }));
+    const doc: ImageDoc = { ...src, img, committed: src.placement };
+    imageDocs.value = { ...imageDocs.value, [docKey(profile)]: doc };
     persist(profile);
+    return doc;
   } catch (e) {
     imageError.value = t('image.decodeFailed', { msg: e instanceof Error ? e.message : String(e) });
+    return null;
   }
 }
+
+export async function loadImageBytes(profile: number, bytes: Uint8Array<ArrayBuffer>, type: string, name: string): Promise<ImageDoc | null> {
+  imageError.value = '';
+  try {
+    const img = await decodeImage(new Blob([bytes], { type }));
+    const p = presetPlacement(img.frames[0].bitmap, 'crop');
+    const doc: ImageDoc = { name, type, bytes, img, preset: 'crop', placement: p, committed: p, invert: false, gamma: 1 };
+    imageDocs.value = { ...imageDocs.value, [docKey(profile)]: doc };
+    persist(profile);
+    return doc;
+  } catch (e) {
+    imageError.value = t('image.decodeFailed', { msg: e instanceof Error ? e.message : String(e) });
+    return null;
+  }
+}
+
+export async function loadImageFile(profile: number, file: File): Promise<void> {
+  await loadImageBytes(profile, new Uint8Array(await file.arrayBuffer()), file.type, file.name);
+}
+
+/** The stored form of a document (what the library keeps). */
+export const imageSourceOf = (d: ImageDoc): ImageSource => ({
+  name: d.name, type: d.type, bytes: d.bytes, preset: d.preset, placement: d.committed, invert: d.invert, gamma: d.gamma,
+});
 
 export function applyPreset(profile: number, mode: FitMode): void {
   const d = imageDocs.value[docKey(profile)];

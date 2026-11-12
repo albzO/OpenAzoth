@@ -11,6 +11,10 @@ import { t } from '../i18n';
 import { keyLabel } from '../i18n/labels';
 import { debounce } from '../util/storage';
 import { putBlob } from '../util/blobStore';
+import { toGreyFrames } from '../media/decode';
+import { imageBinary } from '../media/gray4';
+import { setImageSource } from './oledImage';
+import { librarySource, type LibraryEntry } from './imageLibrary';
 
 /** IndexedDB key of the last OLED image uploaded to this keyboard for a profile */
 export const imageKey = (profile: number): string => `oled-image-${deviceSerial.value}-p${profile}`;
@@ -171,6 +175,21 @@ export async function uploadImage(binary: Uint8Array, onProgress: Progress): Pro
   oledContent.value = { kind: 'image' };
   toast(t('toast.uploaded', { n, s: ((performance.now() - t0) / 1000).toFixed(1) }));
   return true;
+}
+
+/** Put a library image back on the current profile; with `upload`, also send it to the keyboard. */
+export async function applyLibraryEntry(entry: LibraryEntry, upload: boolean, onProgress: Progress = () => {}): Promise<boolean> {
+  const src = await librarySource(entry);
+  if (!src) {
+    toast(t('library.missing'), true);
+    return false;
+  }
+  const doc = await setImageSource(selectedProfile.value, src);
+  if (!doc) return false;
+  updateCurrent((p) => (p.oled.mode = 'image'));
+  if (!upload) return true;
+  const frames = toGreyFrames(doc.img, { placement: doc.committed, invert: doc.invert, gamma: doc.gamma });
+  return uploadImage(imageBinary(frames, doc.img.animated || frames.length > 1), onProgress);
 }
 
 export async function uploadBanner(w: number, h: number, data: Uint8Array, onProgress: Progress): Promise<boolean> {

@@ -42,7 +42,7 @@ Crateless is a **web page** for the ROG Azoth keyboard: open it, click *Connect 
     <td width="50%" valign="top">
       <img src="docs/images/oled-en.png" alt="OLED screen settings">
       <h3>OLED screen</h3>
-      Built-in presets, upload a GIF/image (16 grey levels, up to 196 frames), custom banner, date &amp; time, on/off and brightness.
+      Built-in presets, upload a GIF/image (16 grey levels, up to 196 frames), custom banner, date &amp; time, on/off and brightness. Saved images go to a library you can switch back to in one click.
     </td>
     <td width="50%" valign="top">
       <img src="docs/images/keys-en.png" alt="Key mapping">
@@ -68,6 +68,7 @@ Crateless is a **web page** for the ROG Azoth keyboard: open it, click *Connect 
 
 | | |
 |---|---|
+| ✎ **Canvas editor** | Layer images and GIFs on the 208×64 screen: move, scale, rotate, mirror, gamma, a timeline with trimming. Upload, save to the library or download as a GIF. Works without a keyboard |
 | 📟 **Live status** | Firmware, battery / charging / voltage, receiver, active profile |
 | 🌐 **Languages** | 中文 / English |
 
@@ -124,7 +125,7 @@ The protocol layer touches no browser APIs, so it is tested without a keyboard. 
 src/
   hid/            WebHID transport (device-agnostic): send/ack/queue, chunked upload, discovery
   devices/azoth/  Azoth protocol as pure functions: info, lighting, keys, OLED, power
-  media/          image processing: GIF decode, 16-level grey, banner text layout
+  media/          image processing: GIF decode/encode, 16-level grey, layer composition, banner text layout
   state/          app state (@preact/signals): connection & live status, per-profile settings, actions, sync
   i18n/           dictionaries (zh, en) and labels for protocol values
   ui/             Preact components
@@ -148,7 +149,7 @@ Files go to `public/rog-assets/`, which is git-ignored. The keyboard always show
 
 </details>
 
-Protocol notes: [docs/PROTOCOL.md](docs/PROTOCOL.md)
+Protocol notes: [docs/PROTOCOL.md](docs/PROTOCOL.md) · Changes: [CHANGELOG.md](CHANGELOG.md)
 
 ## License
 

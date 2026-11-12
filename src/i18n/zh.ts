@@ -1,10 +1,10 @@
 /** 简体中文 — the source dictionary. Every other language must provide the same keys. */
 export const zh = {
   // app
-  'app.name': 'Crateless',
+  'app.name': 'OpenAzoth',
   'app.tagline': 'for ROG Azoth · 非官方 · 免安装',
-  'app.title': 'Crateless — ROG Azoth 网页设置工具（免装奥创）',
-  'app.description': 'Crateless：在 Chrome / Edge 里通过 WebHID 设置 ROG Azoth 键盘，灯效、OLED 屏幕（GIF 上传、画布编辑）、按键映射、电源，不用装奥创（Armoury Crate）。非官方项目，与 ASUS 无关。',
+  'app.title': 'OpenAzoth — ROG Azoth 网页设置工具（免装奥创）',
+  'app.description': 'OpenAzoth：在 Chrome / Edge 里通过 WebHID 设置 ROG Azoth 键盘，灯效、OLED 屏幕（GIF 上传、画布编辑）、按键映射、电源，不用装奥创（Armoury Crate）。非官方项目，与 ASUS 无关。',
   'app.noHid.title': '浏览器不支持 WebHID',
   'app.noHid.body': '请用 Chrome 或 Edge 桌面版打开本页。',
   'app.connect.title': '连接你的 Azoth',

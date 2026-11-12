@@ -1,4 +1,5 @@
 /** localStorage wrapper that never throws (private mode, blocked storage, quota). */
+// keys keep the project's former name (Crateless) so saved settings survive the rename
 const PREFIX = 'crateless.';
 
 export function load<T>(key: string, fallback: T): T {

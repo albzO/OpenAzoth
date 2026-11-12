@@ -1,6 +1,13 @@
 # Changelog
 
-All notable changes to Crateless. Versions follow [Semantic Versioning](https://semver.org/).
+All notable changes to OpenAzoth (called Crateless up to 0.2.0). Versions follow [Semantic Versioning](https://semver.org/).
+
+## [0.2.1] - 2026-11-12
+
+### Changed
+
+- **Renamed from Crateless to OpenAzoth**, since other projects share the old name. The site is now at https://albzo.github.io/OpenAzoth/ and the repository at https://github.com/albzO/OpenAzoth. Settings and the image library saved in the browser are kept.
+- The page title and description say what the site is (ROG Azoth web configurator, no Armoury Crate), and the page has Open Graph and structured data plus a sitemap, so search engines can find it.
 
 ## [0.2.0] - 2026-11-12
 
@@ -30,5 +37,6 @@ First public release.
 - Live status: firmware, battery, receiver, active profile.
 - Chinese and English interface.
 
-[0.2.0]: https://github.com/albzO/Crateless/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/albzO/Crateless/releases/tag/v0.1.0
+[0.2.1]: https://github.com/albzO/OpenAzoth/compare/v0.2.0...v0.2.1
+[0.2.0]: https://github.com/albzO/OpenAzoth/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/albzO/OpenAzoth/releases/tag/v0.1.0

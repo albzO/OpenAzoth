@@ -1,14 +1,14 @@
 <div align="center">
 
-<a href="https://albzo.github.io/Crateless/"><img src="docs/images/banner-zh.svg" alt="Crateless — 在浏览器里设置你的 ROG Azoth" width="100%"></a>
+<a href="https://albzo.github.io/OpenAzoth/"><img src="docs/images/banner-zh.svg" alt="OpenAzoth — 在浏览器里设置你的 ROG Azoth" width="100%"></a>
 
 <p>
-  <a href="https://albzo.github.io/Crateless/"><img src="https://img.shields.io/badge/%E6%89%93%E5%BC%80%E4%BD%BF%E7%94%A8-albzo.github.io%2FCrateless-ff3b47?style=for-the-badge&logo=googlechrome&logoColor=white" alt="打开使用"></a>
+  <a href="https://albzo.github.io/OpenAzoth/"><img src="https://img.shields.io/badge/%E6%89%93%E5%BC%80%E4%BD%BF%E7%94%A8-albzo.github.io%2FOpenAzoth-ff3b47?style=for-the-badge&logo=googlechrome&logoColor=white" alt="打开使用"></a>
 </p>
 
 <p>
-  <a href="https://github.com/albzO/Crateless/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/albzO/Crateless/ci.yml?branch=main&style=flat-square&label=CI" alt="CI"></a>
-  <a href="https://github.com/albzO/Crateless/actions/workflows/pages.yml"><img src="https://img.shields.io/github/actions/workflow/status/albzO/Crateless/pages.yml?branch=main&style=flat-square&label=deploy" alt="Deploy"></a>
+  <a href="https://github.com/albzO/OpenAzoth/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/albzO/OpenAzoth/ci.yml?branch=main&style=flat-square&label=CI" alt="CI"></a>
+  <a href="https://github.com/albzO/OpenAzoth/actions/workflows/pages.yml"><img src="https://img.shields.io/github/actions/workflow/status/albzO/OpenAzoth/pages.yml?branch=main&style=flat-square&label=deploy" alt="Deploy"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-3b82f6?style=flat-square" alt="MIT license"></a>
   <img src="https://img.shields.io/badge/WebHID-Chrome%20%7C%20Edge-39d17f?style=flat-square" alt="WebHID: Chrome | Edge">
   <img src="https://img.shields.io/badge/TypeScript-Preact-3178c6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript + Preact">
@@ -28,7 +28,9 @@
   <sub><b>灯效</b>：全部 10 种效果，选项与官方网页一致（颜色、渐变、背景色、亮度、速度、宽度、方向），实时预览，改动即时生效。</sub>
 </p>
 
-Crateless 是一个**纯网页**的 ROG Azoth 设置工具：打开网页、点“连接键盘”，就能改灯效、OLED 屏幕、按键映射和电源设置。不需要安装任何程序，也没有后台常驻服务。
+OpenAzoth 是一个**纯网页**的 ROG Azoth 设置工具：打开网页、点“连接键盘”，就能改灯效、OLED 屏幕、按键映射和电源设置。不需要安装任何程序，也没有后台常驻服务。
+
+> 原名 **Crateless**，浏览器里保存的设置不受影响。
 
 > [!IMPORTANT]
 > **非官方项目，与 ASUS 无关，也未获其认可。** “ROG”“Azoth”是其各自所有者的商标，这里只用来说明适用的设备。
@@ -77,7 +79,7 @@ Crateless 是一个**纯网页**的 ROG Azoth 设置工具：打开网页、点�
 
 ## 快速上手
 
-1. 用**桌面版 Chrome 或 Edge** 打开 **https://albzo.github.io/Crateless/**（需要 WebHID）。
+1. 用**桌面版 Chrome 或 Edge** 打开 **https://albzo.github.io/OpenAzoth/**（需要 WebHID）。
 2. 点 **连接键盘**，选择 **ROG AZOTH**（有线）或 **ROG OMNI RECEIVER**（无线）。
 3. 开始设置。之后再打开会自动连接。
 
@@ -88,7 +90,7 @@ Crateless 是一个**纯网页**的 ROG Azoth 设置工具：打开网页、点�
 
 官方网页设置工具对 Azoth 走“Legacy Mode”，必须先安装电脑端的 Companion 才能改设置。
 
-| | 官方 Companion | Crateless |
+| | 官方 Companion | OpenAzoth |
 |---|:---:|:---:|
 | 安装 | 桌面程序 + 驱动 | 无，就是一个网页 |
 | 后台进程 | **7 个** | **0 个** |

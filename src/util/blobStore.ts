@@ -3,6 +3,7 @@
  * (an OLED animation can be ~1.3 MB; source images more). Values are structured-cloned,
  * so plain objects containing Uint8Arrays are fine. Failures resolve to null / no-op.
  */
+// former project name, kept so existing data is still found
 const DB = 'crateless';
 const STORE = 'blobs';
 

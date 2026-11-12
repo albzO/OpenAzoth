@@ -1,8 +1,8 @@
 {
-  "name": "crateless",
+  "name": "openazoth",
   "private": true,
-  "version": "0.2.0",
-  "description": "Crateless — configure the ROG Azoth keyboard in the browser (WebHID). Unofficial, not affiliated with ASUS.",
+  "version": "0.2.1",
+  "description": "OpenAzoth — configure the ROG Azoth keyboard in the browser (WebHID). Unofficial, not affiliated with ASUS.",
   "type": "module",
   "license": "MIT",
   "scripts": {

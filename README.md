@@ -1,14 +1,14 @@
 <div align="center">
 
-<a href="https://albzo.github.io/Crateless/"><img src="docs/images/banner-en.svg" alt="Crateless — configure your ROG Azoth in the browser" width="100%"></a>
+<a href="https://albzo.github.io/OpenAzoth/"><img src="docs/images/banner-en.svg" alt="OpenAzoth — configure your ROG Azoth in the browser" width="100%"></a>
 
 <p>
-  <a href="https://albzo.github.io/Crateless/"><img src="https://img.shields.io/badge/Open_it-albzo.github.io%2FCrateless-ff3b47?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Open it"></a>
+  <a href="https://albzo.github.io/OpenAzoth/"><img src="https://img.shields.io/badge/Open_it-albzo.github.io%2FOpenAzoth-ff3b47?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Open it"></a>
 </p>
 
 <p>
-  <a href="https://github.com/albzO/Crateless/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/albzO/Crateless/ci.yml?branch=main&style=flat-square&label=CI" alt="CI"></a>
-  <a href="https://github.com/albzO/Crateless/actions/workflows/pages.yml"><img src="https://img.shields.io/github/actions/workflow/status/albzO/Crateless/pages.yml?branch=main&style=flat-square&label=deploy" alt="Deploy"></a>
+  <a href="https://github.com/albzO/OpenAzoth/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/albzO/OpenAzoth/ci.yml?branch=main&style=flat-square&label=CI" alt="CI"></a>
+  <a href="https://github.com/albzO/OpenAzoth/actions/workflows/pages.yml"><img src="https://img.shields.io/github/actions/workflow/status/albzO/OpenAzoth/pages.yml?branch=main&style=flat-square&label=deploy" alt="Deploy"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-3b82f6?style=flat-square" alt="MIT license"></a>
   <img src="https://img.shields.io/badge/WebHID-Chrome%20%7C%20Edge-39d17f?style=flat-square" alt="WebHID: Chrome | Edge">
   <img src="https://img.shields.io/badge/TypeScript-Preact-3178c6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript + Preact">
@@ -28,7 +28,9 @@
   <sub><b>Lighting</b>: all 10 effects with the same options as the official page (colors, gradient, background, brightness, speed, width, direction), previewed live and applied instantly.</sub>
 </p>
 
-Crateless is a **web page** for the ROG Azoth keyboard: open it, click *Connect keyboard*, and change lighting, the OLED screen, key mapping and power settings. Nothing to install, nothing running in the background.
+OpenAzoth is a **web page** for the ROG Azoth keyboard: open it, click *Connect keyboard*, and change lighting, the OLED screen, key mapping and power settings. Nothing to install, nothing running in the background.
+
+> Formerly called **Crateless**. Settings saved in the browser carry over.
 
 > [!IMPORTANT]
 > **Unofficial. Not affiliated with or endorsed by ASUS.** "ROG" and "Azoth" are trademarks of their respective owners and are used only to say which device this works with.
@@ -77,7 +79,7 @@ Crateless is a **web page** for the ROG Azoth keyboard: open it, click *Connect 
 
 ## Quick start
 
-1. Open **https://albzo.github.io/Crateless/** in **desktop Chrome or Edge** (WebHID is required).
+1. Open **https://albzo.github.io/OpenAzoth/** in **desktop Chrome or Edge** (WebHID is required).
 2. Click **Connect keyboard** and pick **ROG AZOTH** (cable) or **ROG OMNI RECEIVER** (wireless).
 3. Change things. After the first time it connects automatically.
 
@@ -88,7 +90,7 @@ Crateless is a **web page** for the ROG Azoth keyboard: open it, click *Connect 
 
 For the Azoth, the official web configurator runs in "Legacy Mode": you have to install a desktop companion before you can change any setting.
 
-| | Official companion | Crateless |
+| | Official companion | OpenAzoth |
 |---|:---:|:---:|
 | Install | Desktop app + driver | None, it's a web page |
 | Background processes | **7** | **0** |

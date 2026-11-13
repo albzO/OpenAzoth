@@ -2,6 +2,12 @@
 
 All notable changes to OpenAzoth (called Crateless up to 0.2.0). Versions follow [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- Site icon (favicon), shown in the browser tab and when the page is saved to a phone's home screen.
+
 ## [0.2.1] - 2026-11-12
 
 ### Changed
@@ -37,6 +43,7 @@ First public release.
 - Live status: firmware, battery, receiver, active profile.
 - Chinese and English interface.
 
+[Unreleased]: https://github.com/albzO/OpenAzoth/compare/v0.2.1...HEAD
 [0.2.1]: https://github.com/albzO/OpenAzoth/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/albzO/OpenAzoth/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/albzO/OpenAzoth/releases/tag/v0.1.0

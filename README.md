@@ -35,7 +35,8 @@ OpenAzoth is a **web page** for the ROG Azoth keyboard: open it, click *Connect 
 > [!IMPORTANT]
 > **Unofficial. Not affiliated with or endorsed by ASUS.** "ROG" and "Azoth" are trademarks of their respective owners and are used only to say which device this works with.
 >
-> **Supported device:** the original ROG Azoth only (wired, its 2.4 GHz receiver, or an Omni receiver). Not the Azoth Extreme, Azoth X or Azoth 96 HE.
+> **Supported devices:** the original ROG Azoth (wired, its 2.4 GHz receiver, or an Omni receiver).
+> **Experimental:** ROG Azoth X (wired or its own 2.4 GHz receiver). Not yet verified on a real keyboard; the page asks before connecting. Knob settings are not supported yet. Not the Azoth Extreme or Azoth 96 HE.
 
 ## Features
 

@@ -3,7 +3,7 @@
  * records the new setting in the profile store and updates live status.
  */
 import { signal } from '@preact/signals';
-import { currentEffect, device, info, oledContent, online, power } from './connection';
+import { currentEffect, device, info, oledContent, online, pollingRate, power } from './connection';
 import { attempt, toast } from './feedback';
 import { current, deviceSerial, selectedProfile, updateCurrent, updateEffect } from './profiles';
 import { EFFECTS, defaultLighting, type Azoth, type EffectSettings } from '../devices/azoth';
@@ -233,4 +233,10 @@ export async function setPowerSaving(mode: number): Promise<void> {
   const az = device.value;
   if (az && (await attempt(() => az.setPowerSaving(mode), t('toast.savingSet'))) !== undefined && power.value)
     power.value = { ...power.value, saving: mode };
+}
+
+/** Azoth X with a Booster only (experimental) */
+export async function setPollingRate(index: number): Promise<void> {
+  const az = device.value;
+  if (az && (await attempt(() => az.setPollingRate(index), t('toast.pollingSet'))) !== undefined) pollingRate.value = index;
 }

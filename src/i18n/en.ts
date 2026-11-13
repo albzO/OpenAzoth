@@ -10,7 +10,7 @@ export const en: Record<MessageKey, string> = {
   'app.noHid.title': "This browser doesn't support WebHID",
   'app.noHid.body': 'Open this page in desktop Chrome or Edge.',
   'app.connect.title': 'Connect your Azoth',
-  'app.connect.body1': 'Click "Connect keyboard" at the top right and pick ROG AZOTH (cable) or ROG OMNI RECEIVER (wireless).',
+  'app.connect.body1': 'Click "Connect keyboard" and pick ROG AZOTH (cable) or ROG OMNI RECEIVER (wireless). For an Azoth X (experimental), pick ROG AZOTH X or its receiver.',
   'app.connect.body2': 'After the first time, it connects automatically when the keyboard is plugged in or switched on.',
 
   // header / status
@@ -40,6 +40,7 @@ export const en: Record<MessageKey, string> = {
   'header.save.error': 'Save failed',
   'status.disconnected': 'Disconnected',
   'status.unplugged': 'Device unplugged',
+  'status.declined': 'Not connected (experimental support not accepted)',
 
   // connections
   'conn.wired': 'cable',
@@ -54,6 +55,8 @@ export const en: Record<MessageKey, string> = {
   'nav.sync': 'Sync settings',
   'nav.power': 'Power',
   'nav.device': 'Device & log',
+  'nav.bug': 'Report a bug',
+  'nav.bugHint': 'Open a bug report or suggestion on GitHub',
 
   // profile page
   'profile.title': 'Profile {n}',
@@ -192,6 +195,10 @@ export const en: Record<MessageKey, string> = {
   'power.sleepSection': 'Sleep',
   'power.idle': 'Idle time',
   'power.sleepHint': 'Go to sleep after being idle this long.',
+  'power.pollingSection': 'Polling rate',
+  'power.pollingRate': 'Polling rate',
+  'power.pollingHint': 'Shown only while a ROG Polling Rate Booster is detected; like the official page, it offers 1000 Hz and 8000 Hz. Experimental.',
+  'power.boosterInfo': 'Booster firmware {fw}, ID {id}.',
   'sleep.0': '1 min', 'sleep.1': '2 min', 'sleep.2': '3 min', 'sleep.3': '5 min', 'sleep.4': '10 min', 'sleep.255': 'Never',
   'common.on': 'On',
   'common.off': 'Off',
@@ -254,6 +261,7 @@ export const en: Record<MessageKey, string> = {
   'toast.uploaded': 'Uploaded: {n} packets in {s} s',
   'toast.bannerUploaded': 'Banner uploaded ({n} packets)',
   'toast.sleepSet': 'Sleep time set',
+  'toast.pollingSet': 'Polling rate set',
   'toast.lowSet': 'Low-battery warning set',
   'toast.savingSet': 'Power saving set',
   'toast.disconnected': 'Device disconnected',
@@ -279,6 +287,16 @@ export const en: Record<MessageKey, string> = {
   'what.sleep': 'sleep time',
   'what.saving': 'power saving',
   'what.low': 'low-battery warning',
+  'what.polling': 'polling rate',
+  'exp.tag': 'experimental',
+  'exp.title': '{name}: experimental support',
+  'exp.body1': "ROG Azoth X support hasn't been verified on a real keyboard yet. ASUS's own web configurator uses the same commands and the same 208×64 screen as the original Azoth, so lighting, key mapping, the OLED and power settings should work.",
+  'exp.body2': 'The knob settings are not supported yet. The polling-rate setting appears only with a ROG Polling Rate Booster connected.',
+  'exp.body3': 'If something goes wrong, please send what you did and the traffic log from the "Device & log" page:',
+  'exp.report': 'open an issue on GitHub',
+  'exp.remember': "Don't ask again",
+  'exp.cancel': 'Cancel',
+  'exp.continue': 'Connect anyway',
   'what.reset': 'reset to defaults',
   'confirm.again': 'Click again to confirm',
   'light.reset': 'Reset lighting',

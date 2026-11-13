@@ -1,6 +1,6 @@
 /** Top bar: live keyboard / battery / receiver / profile status, language switch and connect button. */
 import {
-  connectByPicker, connectionKind, currentEffect, device, disconnect, info, keyboardState, oledContent, power, receiver, statusMessage,
+  connectByPicker, connectionKind, currentEffect, device, disconnect, info, keyboardState, model, oledContent, power, receiver, statusMessage,
 } from '../state/connection';
 import { saveState } from '../state/actions';
 import { hidAvailable } from '../hid/discovery';
@@ -27,7 +27,10 @@ function KeyboardStatus() {
     <div class={`st ${cls}`}>
       <span class="dot" />
       <div>
-        <b>{title}</b>
+        <b>
+          {title}
+          {model.value === 'azothX' && <span class="tag-exp">{t('exp.tag')}</span>}
+        </b>
         <span class="t">{detail}</span>
       </div>
     </div>

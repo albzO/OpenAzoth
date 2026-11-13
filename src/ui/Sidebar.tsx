@@ -3,6 +3,7 @@ import { PROFILE_COUNT, selectedProfile } from '../state/profiles';
 import { page, selectedKey, type Page } from '../state/ui';
 import { selectProfile } from '../state/actions';
 import { t, type MessageKey } from '../i18n';
+import { ISSUES_URL } from './links';
 
 const GLOBAL_PAGES: [Page, string, MessageKey][] = [
   ['sync', '⟳', 'nav.sync'],
@@ -38,6 +39,10 @@ export function Sidebar() {
           <span class="label">{t(label)}</span>
         </button>
       ))}
+      <a class="navbtn bug" href={ISSUES_URL} target="_blank" rel="noopener noreferrer" title={t('nav.bugHint')}>
+        <span class="ico">🐞</span>
+        <span class="label">{t('nav.bug')}</span>
+      </a>
     </aside>
   );
 }

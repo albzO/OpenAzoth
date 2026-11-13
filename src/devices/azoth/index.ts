@@ -14,6 +14,10 @@ import { lightingPackets, type LightingState } from './lighting';
 import { keyBindCmd } from './keys';
 import { IMAGE_UPLOAD, bannerUpload, oledBrightnessCmd, oledClockCmd, oledPowerCmd, oledPresetCmd } from './oled';
 import { lowBatteryCmd, powerSavingCmd, sleepCmd } from './power';
+import {
+  CMD_BOOSTER_INFO, CMD_BOOSTER_STATE, CMD_POLLING_RATE, parseBoosterConnected, parseBoosterInfo, parsePollingRate, pollingRateCmd,
+  type BoosterInfo,
+} from './performance';
 import { t, type MessageKey } from '../../i18n';
 
 export class RejectedError extends Error {}
@@ -46,6 +50,19 @@ export class Azoth {
     const r = await this.link.cmd(CMD_SERIAL, { optional: true, timeout: 1500 });
     return r ? parseSerial(r) : null;
   }
+  // Azoth X only (experimental): Booster and polling rate
+  async readBoosterConnected(quiet = false): Promise<boolean | null> {
+    const r = await this.link.cmd(CMD_BOOSTER_STATE, { optional: true, quiet, nakOk: true });
+    return r && !isRejection(r) ? parseBoosterConnected(r) : null;
+  }
+  async readBoosterInfo(): Promise<BoosterInfo | null> {
+    const r = await this.link.cmd(CMD_BOOSTER_INFO, { optional: true, nakOk: true });
+    return r && !isRejection(r) ? parseBoosterInfo(r) : null;
+  }
+  async readPollingRate(): Promise<number | null> {
+    const r = await this.link.cmd(CMD_POLLING_RATE, { optional: true, nakOk: true });
+    return r && !isRejection(r) ? parsePollingRate(r) : null;
+  }
 
   // ---- writes
   save = (): Promise<unknown> => this.link.cmd(CMD_SAVE);
@@ -76,6 +93,7 @@ export class Azoth {
   setSleep = (code: number) => this.checked(sleepCmd(code), 'what.sleep');
   setPowerSaving = (mode: number) => this.checked(powerSavingCmd(mode), 'what.saving');
   setLowBattery = (pct: number) => this.checked(lowBatteryCmd(pct), 'what.low');
+  setPollingRate = (index: number) => this.checked(pollingRateCmd(index), 'what.polling');
 
   /** write that the firmware may refuse with ff aa */
   private async checked(bytes: number[], what: MessageKey): Promise<void> {
@@ -89,3 +107,4 @@ export * from './lighting';
 export * from './keys';
 export * from './oled';
 export * from './power';
+export * from './performance';

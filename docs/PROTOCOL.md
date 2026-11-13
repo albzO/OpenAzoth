@@ -68,3 +68,27 @@ as an Omni receiver (0x1A85 -> 0x1ACE). A receiver that hasn't been updated (0x1
 
 Note: `51 37` (used by G-Helper as "low battery") is the **mouse** power-config command in the
 ROG code; the Azoth answers it with `ff aa` (rejected).
+
+## Azoth X (experimental) — from the Gear Link page only, NOT verified on hardware
+Source: gearlink.asus.com `/view/7204/` v1.00.36 (ROG AZOTH X, model m704).
+
+| PID | mode |
+|---|---|
+| 0x1C24 (7204) | wired |
+| 0x1C25 (7205) | its own 2.4 GHz receiver |
+| 7207 | Bluetooth (the page doesn't configure over Bluetooth) |
+
+The page uses the same commands as the Azoth page for lighting, keys, power and OLED, and its
+OLED upload panel is 208×64, 16 grey levels, at most 196 frames, uploaded with `0x61` (GRAY).
+A 136×97 OLED size table in the shared code lists the Azoth X but is never used. Teardowns
+show the same OLED module as the Azoth.
+
+ROG Polling Rate Booster (queried through the keyboard; it is not a HID device the page opens):
+```
+7D 20 02 00          booster connected?        reply [4] = 1 connected
+7D 20 01 00          booster info              reply [4..7] u32 LE firmware, [8..9] VID, [10..11] PID
+12 15                polling-rate index        reply [4]: 0=1000 1=2000 2=4000 3=8000 Hz
+51 31 00 00 <idx>    set polling rate          the page offers 1000 / 8000 Hz only
+```
+The page's polling-rate ("Performance") page is hidden unless `7D 20 02 00` reports a Booster.
+The knob ("lever") commands (`71 00`–`71 02`, `22 01`, `25 0B`, `25 0C`) are not used by this tool.

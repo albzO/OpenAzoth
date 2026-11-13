@@ -2,10 +2,14 @@
 
 All notable changes to OpenAzoth (called Crateless up to 0.2.0). Versions follow [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.3.0] - 2026-11-14
 
 ### Added
 
+- **Experimental ROG Azoth X support** (wired `0x1C24`, own 2.4 GHz receiver `0x1C25`). ASUS's own web configurator uses the same commands and the same 208×64 OLED for it, but it has not been tested on a real keyboard yet, so the page asks for confirmation before connecting. Knob settings are not supported yet.
+- Polling rate (1000 / 8000 Hz) on the Power page for the Azoth X, shown only while the keyboard reports a ROG Polling Rate Booster, as on the official page. The Booster's firmware and ID are shown with it.
+- "Report a bug" link at the bottom of the sidebar.
+- "Connect keyboard" button in the middle of the start screen.
 - Site icon (favicon), shown in the browser tab and when the page is saved to a phone's home screen.
 
 ## [0.2.1] - 2026-11-12
@@ -43,7 +47,7 @@ First public release.
 - Live status: firmware, battery, receiver, active profile.
 - Chinese and English interface.
 
-[Unreleased]: https://github.com/albzO/OpenAzoth/compare/v0.2.1...HEAD
+[0.3.0]: https://github.com/albzO/OpenAzoth/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/albzO/OpenAzoth/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/albzO/OpenAzoth/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/albzO/OpenAzoth/releases/tag/v0.1.0

@@ -5,10 +5,12 @@
  */
 import { batch, computed, signal } from '@preact/signals';
 import { HidLink, findControlCollection } from '../hid/transport';
-import { CONNECTION_KIND, grantedDevices, hidAvailable, isReceiver, isWired, requestDevice, type ConnectionKind } from '../hid/discovery';
+import {
+  CONNECTION_KIND, grantedDevices, hidAvailable, isReceiver, isWired, modelOf, requestDevice, type ConnectionKind, type Model,
+} from '../hid/discovery';
 import {
   Azoth, CMD_DEVICE_INFO, oledContentFromCode, receiverFirmware, receiverLinked,
-  type DeviceInfo, type OledContent, type PowerState,
+  type BoosterInfo, type DeviceInfo, type OledContent, type PowerState,
 } from '../devices/azoth';
 import { t, type MessageKey } from '../i18n';
 import { log, toast } from './feedback';
@@ -35,7 +37,12 @@ export const receiver = signal<{ present: boolean; firmware: string; linked: boo
   linked: null,
 });
 
+/** Azoth X only (experimental): ROG Polling Rate Booster and the polling-rate index */
+export const booster = signal<{ connected: boolean; info: BoosterInfo | null } | null>(null);
+export const pollingRate = signal<number | null>(null);
+
 export const online = computed(() => keyboardState.value === 'online');
+export const model = computed<Model | null>(() => (device.value ? modelOf(device.value.link.device) : null));
 export const connectionKind = computed<ConnectionKind | null>(() =>
   device.value ? CONNECTION_KIND[device.value.link.device.productId] : null,
 );
@@ -52,6 +59,7 @@ export async function refresh(): Promise<boolean> {
   const layout = await az.readLayout();
   const anim = await az.readOledAnimation();
   const sn = await az.readSerial();
+  if (modelOf(az.link.device) === 'azothX') await refreshBooster(az);
   batch(() => {
     if (sn) {
       serialNumber.value = sn;
@@ -71,11 +79,32 @@ export async function refresh(): Promise<boolean> {
   return true;
 }
 
+/** The polling-rate setting is only offered while a Booster is connected, as on the vendor page. */
+async function refreshBooster(az: Azoth, quiet = false): Promise<void> {
+  const connected = await az.readBoosterConnected(quiet);
+  if (!connected) {
+    batch(() => {
+      booster.value = connected === null ? null : { connected: false, info: null };
+      pollingRate.value = null;
+    });
+    return;
+  }
+  if (booster.value?.connected) return; // already read
+  const boosterInfo = await az.readBoosterInfo();
+  const rate = await az.readPollingRate();
+  batch(() => {
+    booster.value = { connected: true, info: boosterInfo };
+    pollingRate.value = rate;
+  });
+}
+
 function setOnline(on: boolean): void {
   keyboardState.value = on ? 'online' : 'offline';
   if (!on) {
     info.value = null;
     power.value = null;
+    booster.value = null;
+    pollingRate.value = null;
     if (device.value?.viaReceiver) receiver.value = { ...receiver.value, linked: false };
     log('sy', t('log.offline'));
   } else log('sy', t('log.online'));
@@ -97,7 +126,11 @@ async function poll(): Promise<void> {
     if (!online.value) {
       setOnline(true);
       await refresh();
-    } else power.value = pw;
+    } else {
+      power.value = pw;
+      // notice a Booster being plugged in or out
+      if (tick % 3 === 0 && modelOf(az.link.device) === 'azothX') await refreshBooster(az, true);
+    }
   } else if (++misses >= 2 && online.value) setOnline(false);
 }
 
@@ -175,9 +208,42 @@ function watchForeignTraffic(link: HidLink): void {
   };
 }
 
+// ---------------------------------------------------------------- experimental devices
+/** Set while the "experimental support" dialog is open; answered by confirmExperimental(). */
+export const experimentalPrompt = signal<{ productName: string } | null>(null);
+let answerPrompt: ((ok: boolean) => void) | null = null;
+const ACK_KEY = 'azothXAck';
+
+export function confirmExperimental(ok: boolean, remember: boolean): void {
+  if (ok && remember) save(ACK_KEY, true);
+  experimentalPrompt.value = null;
+  answerPrompt?.(ok);
+  answerPrompt = null;
+}
+
+/** Ask before talking to a keyboard whose support isn't verified on hardware yet. */
+function acceptExperimental(dev: HIDDevice): Promise<boolean> {
+  if (modelOf(dev) !== 'azothX' || load(ACK_KEY, false)) return Promise.resolve(true);
+  answerPrompt?.(false);
+  return new Promise((resolve) => {
+    answerPrompt = resolve;
+    experimentalPrompt.value = { productName: dev.productName || 'ROG Azoth X' };
+  });
+}
+
 // ---------------------------------------------------------------- attach / detach
-async function attach(dev: HIDDevice): Promise<void> {
+let declined: HIDDevice | null = null;
+
+async function attach(dev: HIDDevice, fromUser = false): Promise<void> {
   if (device.value?.link.device === dev) return;
+  // don't ask again on every auto-reconnect after the user said no; the connect button asks again
+  if (dev === declined && !fromUser) return;
+  if (!(await acceptExperimental(dev))) {
+    declined = dev;
+    statusMessage.value = 'status.declined';
+    return;
+  }
+  declined = null;
   await device.value?.link.close();
   const link = await HidLink.open(dev, log);
   watchForeignTraffic(link);
@@ -202,6 +268,8 @@ export async function disconnect(reason: MessageKey | null = null): Promise<void
     power.value = null;
     oledContent.value = null;
     currentEffect.value = null;
+    booster.value = null;
+    pollingRate.value = null;
     statusMessage.value = reason;
   });
   await az?.link.close();
@@ -222,7 +290,7 @@ export async function autoConnect(): Promise<void> {
 export async function connectByPicker(): Promise<void> {
   try {
     const dev = await requestDevice();
-    if (dev) await attach(dev);
+    if (dev) await attach(dev, true);
   } catch (e) {
     toast(errText(e), true);
   }

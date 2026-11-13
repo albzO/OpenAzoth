@@ -1,6 +1,7 @@
 import { LOW_BATTERY_LEVELS, SAVING, SAVING_MODES, SLEEP_CODES } from '../../devices/azoth/power';
-import { power } from '../../state/connection';
-import { setLowBattery, setPowerSaving, setSleep } from '../../state/actions';
+import { POLLING_CHOICES, POLLING_HZ } from '../../devices/azoth/performance';
+import { booster, pollingRate, power } from '../../state/connection';
+import { setLowBattery, setPollingRate, setPowerSaving, setSleep } from '../../state/actions';
 import { t, type MessageKey } from '../../i18n';
 import { sleepName } from '../../i18n/labels';
 import { Card, Row, Seg } from '../common/controls';
@@ -62,6 +63,29 @@ export function PowerPage() {
         </Row>
         <p class="hint">{t('power.sleepHint')}</p>
       </Card>
+      <PollingRateCard />
     </div>
+  );
+}
+
+/** Azoth X only (experimental): shown only while the keyboard reports a ROG Polling Rate Booster, as on the vendor page. */
+function PollingRateCard() {
+  const b = booster.value;
+  if (!b?.connected) return null;
+  const hex4 = (n: number) => n.toString(16).padStart(4, '0');
+  return (
+    <Card title={t('power.pollingSection')}>
+      <Row label={t('power.pollingRate')}>
+        <Seg
+          options={POLLING_CHOICES.map((c) => [c, `${POLLING_HZ[c]} Hz`] as const)}
+          value={pollingRate.value ?? undefined}
+          onChange={(v) => void setPollingRate(v)}
+        />
+      </Row>
+      <p class="hint">
+        {t('power.pollingHint')}
+        {b.info && ` ${t('power.boosterInfo', { fw: b.info.firmware || '—', id: `${hex4(b.info.vid)}:${hex4(b.info.pid)}` })}`}
+      </p>
+    </Card>
   );
 }

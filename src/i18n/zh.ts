@@ -8,7 +8,7 @@ export const zh = {
   'app.noHid.title': '浏览器不支持 WebHID',
   'app.noHid.body': '请用 Chrome 或 Edge 桌面版打开本页。',
   'app.connect.title': '连接你的 Azoth',
-  'app.connect.body1': '点右上角"连接键盘"，在弹窗里选 ROG AZOTH（有线）或 ROG OMNI RECEIVER（无线）。',
+  'app.connect.body1': '点上面的"连接键盘"，在弹窗里选 ROG AZOTH（有线）或 ROG OMNI RECEIVER（无线）。Azoth X（实验性）选 ROG AZOTH X 或它的接收器。',
   'app.connect.body2': '授权过一次后，插上或打开键盘会自动连接。',
 
   // header / status
@@ -38,6 +38,7 @@ export const zh = {
   'header.save.error': '保存失败',
   'status.disconnected': '已断开',
   'status.unplugged': '设备已拔出',
+  'status.declined': '已取消连接（实验性支持未确认）',
 
   // connections
   'conn.wired': '有线',
@@ -52,6 +53,8 @@ export const zh = {
   'nav.sync': '同步设置',
   'nav.power': '电源',
   'nav.device': '设备与记录',
+  'nav.bug': '反馈问题',
+  'nav.bugHint': '在 GitHub 上提交 bug 或建议',
 
   // profile page
   'profile.title': 'Profile {n}',
@@ -189,6 +192,10 @@ export const zh = {
   'power.sleepSection': '睡眠模式',
   'power.idle': '空闲时间',
   'power.sleepHint': '当空闲以下时间后切换为睡眠模式。',
+  'power.pollingSection': '回报率',
+  'power.pollingRate': '回报率',
+  'power.pollingHint': '检测到 ROG Polling Rate Booster 时才显示，和官方网页一样只提供 1000 Hz 和 8000 Hz。实验性功能。',
+  'power.boosterInfo': 'Booster 固件 {fw}，ID {id}。',
   'sleep.0': '1 分钟', 'sleep.1': '2 分钟', 'sleep.2': '3 分钟', 'sleep.3': '5 分钟', 'sleep.4': '10 分钟', 'sleep.255': '永不',
   'common.on': '开',
   'common.off': '关',
@@ -251,6 +258,7 @@ export const zh = {
   'toast.uploaded': '上传完成：{n} 包，{s} 秒',
   'toast.bannerUploaded': '横幅已上传（{n} 包）',
   'toast.sleepSet': '睡眠时间已设置',
+  'toast.pollingSet': '回报率已设置',
   'toast.lowSet': '低电量警示已设置',
   'toast.savingSet': '省电模式已设置',
   'toast.disconnected': '设备已断开',
@@ -276,6 +284,16 @@ export const zh = {
   'what.sleep': '睡眠时间',
   'what.saving': '省电模式',
   'what.low': '低电量警示',
+  'what.polling': '回报率',
+  'exp.tag': '实验性',
+  'exp.title': '{name}：实验性支持',
+  'exp.body1': 'ROG Azoth X 的支持还没有在实机上验证过。根据 ASUS 官方网页设置工具的代码，它和初代 Azoth 使用同一套命令和同样的 208×64 屏幕，所以灯效、按键映射、OLED 和电源设置应该可以直接用。',
+  'exp.body2': '旋钮设置暂不支持。回报率设置只在接入 ROG Polling Rate Booster 时出现。',
+  'exp.body3': '如果遇到问题，请把出问题的操作和“设备与记录”页里的通信记录发给我们：',
+  'exp.report': '在 GitHub 提交问题',
+  'exp.remember': '以后不再提示',
+  'exp.cancel': '取消',
+  'exp.continue': '继续连接',
   'what.reset': '恢复默认',
   'confirm.again': '再点一次确认',
   'light.reset': '恢复默认灯效',

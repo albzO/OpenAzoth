@@ -1,4 +1,4 @@
-import { device, online } from '../state/connection';
+import { connectByPicker, device, online } from '../state/connection';
 import { toastMessage } from '../state/feedback';
 import { page } from '../state/ui';
 import { hidAvailable } from '../hid/discovery';
@@ -10,6 +10,7 @@ import { PowerPage } from './power/PowerPage';
 import { DevicePage } from './device/DevicePage';
 import { SyncPage } from './sync/SyncPage';
 import { EditorPage } from './editor/EditorPage';
+import { ExperimentalDialog } from './ExperimentalDialog';
 
 function Placeholder() {
   if (!hidAvailable())
@@ -22,6 +23,9 @@ function Placeholder() {
   return (
     <div class="empty">
       <h2>{t('app.connect.title')}</h2>
+      <button class="primary big" onClick={() => void connectByPicker()}>
+        {t('header.connect')}
+      </button>
       <p>
         {t('app.connect.body1')}
         <br />
@@ -49,6 +53,7 @@ export function App() {
       <Sidebar />
       <main class="content">{body}</main>
       {toast && <div class={`toast ${toast.error ? 'err' : ''}`}>{toast.text}</div>}
+      <ExperimentalDialog />
     </div>
   );
 }

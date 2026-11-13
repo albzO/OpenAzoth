@@ -1,7 +1,7 @@
 {
   "name": "openazoth",
   "private": true,
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "OpenAzoth — configure the ROG Azoth keyboard in the browser (WebHID). Unofficial, not affiliated with ASUS.",
   "type": "module",
   "license": "MIT",

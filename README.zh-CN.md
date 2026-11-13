@@ -35,7 +35,8 @@ OpenAzoth 是一个**纯网页**的 ROG Azoth 设置工具：打开网页、点�
 > [!IMPORTANT]
 > **非官方项目，与 ASUS 无关，也未获其认可。** “ROG”“Azoth”是其各自所有者的商标，这里只用来说明适用的设备。
 >
-> **支持的设备：** 仅限初代 ROG Azoth（有线、原装 2.4G 接收器或 Omni 接收器）。不支持 Azoth Extreme、Azoth X、Azoth 96 HE。
+> **支持的设备：** 初代 ROG Azoth（有线、原装 2.4G 接收器或 Omni 接收器）。
+> **实验性支持：** ROG Azoth X（有线或其自带 2.4G 接收器）。还没在实机上验证过，连接前页面会先让你确认；旋钮设置暂不支持。不支持 Azoth Extreme、Azoth 96 HE。
 
 ## 功能
 

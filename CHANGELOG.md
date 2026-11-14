@@ -2,6 +2,13 @@
 
 All notable changes to OpenAzoth (called Crateless up to 0.2.0). Versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.4.0] - 2026-11-14
+
+### Added
+
+- **Control lever settings** on the Keys page: map the custom mode's up / press / down to any key, mouse button or media key, and switch each lever mode on or off (switched-off modes are skipped by the side button). Verified on an Azoth through the Omni receiver. The keyboard can't report these, so the page remembers them per profile, and "Sync settings" writes them back.
+- "Write to keyboard again" button for the lever, and a debug card on the Device page that maps a test key to any raw key code and shows what the computer receives (used to confirm the firmware has no F13–F24).
+
 ## [0.3.0] - 2026-11-14
 
 ### Added
@@ -47,6 +54,7 @@ First public release.
 - Live status: firmware, battery, receiver, active profile.
 - Chinese and English interface.
 
+[0.4.0]: https://github.com/albzO/OpenAzoth/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/albzO/OpenAzoth/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/albzO/OpenAzoth/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/albzO/OpenAzoth/compare/v0.1.0...v0.2.0

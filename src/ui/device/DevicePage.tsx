@@ -4,6 +4,7 @@ import { clearLog, logEnabled, logEntries, toast } from '../../state/feedback';
 import { t } from '../../i18n';
 import { connectionName, effectName, oledContentName } from '../../i18n/labels';
 import { Card } from '../common/controls';
+import { RawKeyTest } from './RawKeyTest';
 
 const ARROW = { tx: '→', rx: '←', er: '!', sy: '·' } as const;
 
@@ -70,6 +71,7 @@ export function DevicePage() {
           </p>
         </Card>
       </div>
+      <RawKeyTest />
       <Card
         title={t('device.log')}
         actions={

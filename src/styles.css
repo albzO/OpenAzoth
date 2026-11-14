@@ -222,3 +222,16 @@ button.sel-btn { background: var(--accent-soft); border-color: var(--accent); }
 .modal a { color: var(--accent); }
 .modal .chk { display: flex; align-items: center; gap: 6px; margin: 14px 0 4px; color: var(--muted); font-size: 13px; }
 .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+
+/* control lever card */
+.lever-rows .row { display: flex; align-items: center; gap: 12px; margin: 6px 0; }
+.lever-rows .row label { color: var(--muted); }
+.lever-rows select { background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; min-width: 220px; }
+.lever-mode { margin-bottom: 8px; color: var(--muted); }
+.lever-mode b { color: var(--text); margin-left: 4px; }
+.lever-modes { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+.lever-modes .chk { display: flex; align-items: center; gap: 4px; }
+.lever-modes .chk.cur { color: var(--accent); font-weight: 600; }
+.lever-switch { display: flex; align-items: center; gap: 4px; margin: 4px 0 8px; }
+.lever-rows .row label { width: 110px; }
+.lever-rows .row label.cur { color: var(--accent); font-weight: 600; }

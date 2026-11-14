@@ -50,7 +50,7 @@ OpenAzoth is a **web page** for the ROG Azoth keyboard: open it, click *Connect 
     <td width="50%" valign="top">
       <img src="docs/images/keys-en.png" alt="Key mapping">
       <h3>Key mapping</h3>
-      Remap any key to another key, a media key or a mouse button. Written to the keyboard instantly.
+      Remap any key to another key, a media key or a mouse button, and set up the control lever (its custom up / press / down, and which modes the side button cycles). Written to the keyboard instantly.
     </td>
   </tr>
   <tr>

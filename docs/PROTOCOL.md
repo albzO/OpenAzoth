@@ -92,3 +92,43 @@ ROG Polling Rate Booster (queried through the keyboard; it is not a HID device t
 ```
 The page's polling-rate ("Performance") page is hidden unless `7D 20 02 00` reports a Booster.
 The knob ("lever") commands (`71 00`–`71 02`, `22 01`, `25 0B`, `25 0C`) are not used by this tool.
+
+## Control lever — from the Gear Link page, verified on an Azoth via the Omni receiver (fw 4.00.18) 2026-11-14
+The side button cycles the lever through its modes; up / press / down then do:
+
+| mode | up | press | down |
+|---|---|---|---|
+| 0 system volume | volume +2 | mute / unmute | volume −2 |
+| 1 media | previous track | play / pause | next track |
+| 2 key brightness | +25 % | 100 % / 0 % | −25 % |
+| 3 OLED brightness | +25 % | 100 % / 0 % | −25 % |
+| 4 lighting effect | previous effect | key brightness 100 % / 0 % | next effect |
+| 5 / 6 motherboard / AIO fan | (needs Armoury Crate; not offered) | | |
+| 7 custom | mapped (default scroll up) | mapped (default middle click) | mapped (default scroll down) |
+
+```
+22 01                                   current mode            reply [4]            ✅
+71 00 00 00 <mode> <0|1>                mode on / off           echoed               ✅ off = skipped by the side button
+71 01 00 00 07 <src u16> <target u16>   custom-mode mapping     echoed               ✅
+25 0B                                   all mode on/off flags   ff aa (rejected)     ❌
+25 0C 00 00 07 <src u16>                read custom mapping     ff aa (rejected)     ❌
+```
+Sources: up `0xA4`, press `0xA5`, down `0xA6`. Targets use the same key codes as `51 20`. The page
+saves (`50 55`) after each write. Because the settings can't be read back, the tool records them
+per profile. The vendor code uses custom index 5 instead of 7 behind an Omni receiver, but these tests ran
+through the Omni receiver and 7 is what works; the tool always sends 7.
+
+## No F13–F24 in the firmware — tested 2026-11-14 (fw 4.00.18, via the Omni receiver)
+Key remapping (`51 20`) takes the keyboard's own key-position numbers, not USB usages. Mapping
+right Ctrl to raw codes with the debug card on the Device page and pressing it gave:
+
+| code | computer received |
+|---|---|
+| 124 | PrintScreen (as in the vendor table) |
+| 127, 129, 130 | nothing (accepted, but no key) |
+| 128 | Win (right Win in the table) |
+| 131 | NonConvert (as in the vendor table) |
+| 134–149 | nothing |
+
+So codes outside the vendor table are empty slots, and the firmware has no F13–F24. Use a
+software remapper on the computer (AutoHotkey, PowerToys) if those keys are needed.

@@ -1,11 +1,14 @@
 import { useEffect, useRef } from 'preact/hooks';
 import { KEY, LAYOUT, TARGET_GROUPS } from '../../devices/azoth/keys';
+import { LEVER, LEVER_CUSTOM, LEVER_DEFAULT, LEVER_MODES, LEVER_SOURCES } from '../../devices/azoth/lever';
+import { device, online } from '../../state/connection';
+import { forgetLeverRead, leverBusy, leverView, readLever, resetLever, rewriteLever, setLeverModeEnabled, setLeverTarget } from '../../state/lever';
 import { current } from '../../state/profiles';
 import { selectedKey } from '../../state/ui';
 import { mapKey, restoreAllKeys } from '../../state/actions';
 import { t, type MessageKey } from '../../i18n';
 import { keyLabel } from '../../i18n/labels';
-import { Card, ConfirmButton } from '../common/controls';
+import { Card, ConfirmButton, Seg } from '../common/controls';
 
 const KEY_UNIT = 46;
 const GAP = 5;
@@ -89,6 +92,102 @@ export function KeysTab() {
         <p class="hint">{t('keys.note')}</p>
       </Card>
       {selectedKey.value !== null && <TargetPicker source={selectedKey.value} />}
+      <LeverCard />
     </>
+  );
+}
+
+const LEVER_LABEL: Record<number, MessageKey> = { [LEVER.UP]: 'lever.up', [LEVER.PRESS]: 'lever.press', [LEVER.DOWN]: 'lever.down' };
+
+/** On / off for one lever mode. */
+function ModeSwitch({ mode }: { mode: number }) {
+  return (
+    <div class={leverBusy.value ? 'blocked' : ''}>
+      <Seg
+        options={[[true, t('common.on')], [false, t('common.off')]]}
+        value={leverView.value.enabled[mode]}
+        onChange={(on) => void setLeverModeEnabled(mode, on)}
+      />
+    </div>
+  );
+}
+
+/**
+ * Control lever: custom-mode mapping and which modes the side button cycles through.
+ * The keyboard can't report these, so what's shown is what was set here (per profile).
+ */
+function LeverCard() {
+  const az = device.value;
+  useEffect(() => {
+    forgetLeverRead();
+    if (az && online.value) void readLever();
+  }, [az, online.value]);
+  const view = leverView.value;
+  const busy = leverBusy.value;
+  return (
+    <Card
+      title={t('lever.title')}
+      sub={t('lever.sub')}
+      actions={
+        <>
+          <button disabled={!az || busy} onClick={() => void readLever()}>
+            {t('lever.read')}
+          </button>
+          <button disabled={!az || busy} onClick={() => void rewriteLever()} title={t('lever.rewriteHint')}>
+            {t('lever.rewrite')}
+          </button>
+          <ConfirmButton disabled={!az || busy} onConfirm={() => void resetLever()}>
+            {t('lever.reset')}
+          </ConfirmButton>
+        </>
+      }
+    >
+      <div class="lever-rows">
+        <div class="lever-mode">
+          {t('lever.current')}
+          <b>{view.mode != null ? t(`lever.mode.${view.mode}` as MessageKey) : '—'}</b>
+        </div>
+        <div class="group-title">{t('lever.customTitle')}</div>
+        <div class="row">
+          <label class={view.mode === LEVER_CUSTOM ? 'cur' : ''}>{t('lever.customSwitch')}</label>
+          <ModeSwitch mode={LEVER_CUSTOM} />
+        </div>
+        {LEVER_SOURCES.map((src) => {
+          const now = view.targets[src];
+          const label = t(LEVER_LABEL[src]);
+          return (
+            <div class="row" key={src}>
+              <label>{label}</label>
+              <select
+                disabled={!az || busy}
+                value={now}
+                onChange={(e) => void setLeverTarget(src, Number((e.currentTarget as HTMLSelectElement).value), label)}
+              >
+                <option value={LEVER_DEFAULT[src]}>{t('lever.default', { key: keyLabel(LEVER_DEFAULT[src]) })}</option>
+                {TARGET_GROUPS.map((g) => (
+                  <optgroup key={g.id} label={t(`group.${g.id}` as MessageKey)}>
+                    {g.codes.map((code) => (
+                      <option key={code} value={code}>
+                        {keyLabel(code)}
+                      </option>
+                    ))}
+                  </optgroup>
+                ))}
+                {!TARGET_GROUPS.some((g) => g.codes.includes(now)) && now !== LEVER_DEFAULT[src] && <option value={now}>{keyLabel(now)}</option>}
+              </select>
+            </div>
+          );
+        })}
+        <p class="hint">{t('lever.customHint', { mode: t(`lever.mode.${LEVER_CUSTOM}` as MessageKey) })}</p>
+        <div class="group-title">{t('lever.modesTitle')}</div>
+        {LEVER_MODES.filter((m) => m !== LEVER_CUSTOM).map((m) => (
+          <div class="row" key={m}>
+            <label class={view.mode === m ? 'cur' : ''}>{t(`lever.mode.${m}` as MessageKey)}</label>
+            <ModeSwitch mode={m} />
+          </div>
+        ))}
+        <p class="hint">{t('lever.modesHint')}</p>
+      </div>
+    </Card>
   );
 }

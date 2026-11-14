@@ -25,6 +25,15 @@ export interface ProfileSettings {
   oled: OledSettings;
   /** source key code → target code, only keys changed from default */
   keyMap: Record<number, number>;
+  /** control lever; the keyboard can't report it, so only what was set here (absent = factory default) */
+  lever: LeverSettings;
+}
+
+export interface LeverSettings {
+  /** mode → on/off (absent = on) */
+  enabled: Record<number, boolean>;
+  /** custom-mode direction → target code (absent = default) */
+  map: Record<number, number>;
 }
 
 export const PROFILE_COUNT = 6;
@@ -42,6 +51,7 @@ export const defaultProfile = (): ProfileSettings => ({
     clock24h: true,
   },
   keyMap: {},
+  lever: { enabled: {}, map: {} },
 });
 
 interface Stored {
@@ -63,6 +73,7 @@ export function migrate(raw: unknown): ProfileSettings[] {
       lighting: { effect: p.lighting?.effect ?? 0, fx: { ...d.lighting.fx, ...(p.lighting?.fx ?? {}) } },
       oled: { ...d.oled, ...(p.oled ?? {}), banner },
       keyMap: { ...(p.keyMap ?? {}) },
+      lever: { enabled: { ...(p.lever?.enabled ?? {}) }, map: { ...(p.lever?.map ?? {}) } },
     };
   });
 }

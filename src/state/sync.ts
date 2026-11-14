@@ -5,12 +5,13 @@
  * Per profile:
  *   1. lighting  every effect's settings, the selected effect last (so it ends up active)
  *   2. keys      every key on the layout: its recorded target, or itself (= default)
- *   3. OLED      power, brightness, then the content: preset / clock / banner / last uploaded image
- *   4. save to flash
+ *   3. lever     which modes are on, and the custom-mode mapping (recorded or default)
+ *   4. OLED      power, brightness, then the content: preset / clock / banner / last uploaded image
+ *   5. save to flash
  * Power settings are global and read back from the keyboard, so they are never out of sync.
  */
 import { signal } from '@preact/signals';
-import { EFFECTS, KEY, LAYOUT, type Azoth } from '../devices/azoth';
+import { EFFECTS, KEY, LAYOUT, LEVER_DEFAULT, LEVER_MODES, LEVER_SOURCES, type Azoth } from '../devices/azoth';
 import { renderBanner } from '../media/banner';
 import { pack4 } from '../media/gray4';
 import { getBlob } from '../util/blobStore';
@@ -33,8 +34,8 @@ const LAYOUT_CODES = LAYOUT.flat()
   .map(([name]) => KEY[name])
   .filter((c): c is number => c !== undefined);
 
-/** number of progress steps per profile: effects + keys + OLED + save */
-const STEPS_PER_PROFILE = EFFECTS.length + LAYOUT_CODES.length + 2;
+/** number of progress steps per profile: effects + keys + lever + OLED + save */
+const STEPS_PER_PROFILE = EFFECTS.length + LAYOUT_CODES.length + 3;
 
 async function syncOne(az: Azoth, index: number, p: ProfileSettings, step: (label: string) => void): Promise<string[]> {
   const notes: string[] = [];
@@ -54,7 +55,16 @@ async function syncOne(az: Azoth, index: number, p: ProfileSettings, step: (labe
     step(t('sync.step.keys', { p: tag }));
   }
 
-  // 3. OLED
+  // 3. lever — a firmware that refuses it shouldn't stop the rest of the sync
+  try {
+    for (const m of LEVER_MODES) await az.enableLeverMode(m, p.lever.enabled[m] ?? true);
+    for (const src of LEVER_SOURCES) await az.bindLever(src, p.lever.map[src] ?? LEVER_DEFAULT[src]);
+  } catch (e) {
+    notes.push(t('sync.leverFailed', { p: tag, msg: e instanceof Error ? e.message : String(e) }));
+  }
+  step(t('sync.step.lever', { p: tag }));
+
+  // 4. OLED
   const o = p.oled;
   await az.oledPower(o.on);
   if (o.on) {
@@ -74,7 +84,7 @@ async function syncOne(az: Azoth, index: number, p: ProfileSettings, step: (labe
   }
   step(t('sync.step.oled', { p: tag }));
 
-  // 4. persist
+  // 5. persist
   await az.save();
   step(t('sync.step.save', { p: tag }));
   return notes;

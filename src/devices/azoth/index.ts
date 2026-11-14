@@ -15,6 +15,9 @@ import { keyBindCmd } from './keys';
 import { IMAGE_UPLOAD, bannerUpload, oledBrightnessCmd, oledClockCmd, oledPowerCmd, oledPresetCmd } from './oled';
 import { lowBatteryCmd, powerSavingCmd, sleepCmd } from './power';
 import {
+  CMD_LEVER_MODE, CMD_LEVER_STATE, leverBindCmd, leverEnableCmd, leverReadCmd, parseLeverMode, parseLeverState, parseLeverTarget,
+} from './lever';
+import {
   CMD_BOOSTER_INFO, CMD_BOOSTER_STATE, CMD_POLLING_RATE, parseBoosterConnected, parseBoosterInfo, parsePollingRate, pollingRateCmd,
   type BoosterInfo,
 } from './performance';
@@ -59,6 +62,19 @@ export class Azoth {
     const r = await this.link.cmd(CMD_BOOSTER_INFO, { optional: true, nakOk: true });
     return r && !isRejection(r) ? parseBoosterInfo(r) : null;
   }
+  // lever (experimental)
+  async readLeverMode(): Promise<number | null> {
+    const r = await this.link.cmd(CMD_LEVER_MODE, { optional: true, nakOk: true });
+    return r && !isRejection(r) ? parseLeverMode(r) : null;
+  }
+  async readLeverState(): Promise<boolean[] | null> {
+    const r = await this.link.cmd(CMD_LEVER_STATE, { optional: true, nakOk: true });
+    return r && !isRejection(r) ? parseLeverState(r) : null;
+  }
+  async readLeverTarget(source: number): Promise<number | null> {
+    const r = await this.link.cmd(leverReadCmd(source), { optional: true, nakOk: true });
+    return r && !isRejection(r) ? parseLeverTarget(r) : null;
+  }
   async readPollingRate(): Promise<number | null> {
     const r = await this.link.cmd(CMD_POLLING_RATE, { optional: true, nakOk: true });
     return r && !isRejection(r) ? parsePollingRate(r) : null;
@@ -77,6 +93,11 @@ export class Azoth {
   }
 
   bindKey = (source: number, target: number): Promise<unknown> => this.link.cmd(keyBindCmd(source, target));
+  /** Debug: map a key to any code and report how the keyboard answered (echo, ff aa, or nothing). */
+  async bindKeyRaw(source: number, target: number): Promise<'ok' | 'rejected' | 'noReply'> {
+    const r = await this.link.cmd(keyBindCmd(source, target), { optional: true, nakOk: true });
+    return !r ? 'noReply' : isRejection(r) ? 'rejected' : 'ok';
+  }
 
   oledPower = (on: boolean): Promise<unknown> => this.link.cmd(oledPowerCmd(on));
   oledBrightness = (pct: number): Promise<unknown> => this.link.cmd(oledBrightnessCmd(pct));
@@ -93,6 +114,8 @@ export class Azoth {
   setSleep = (code: number) => this.checked(sleepCmd(code), 'what.sleep');
   setPowerSaving = (mode: number) => this.checked(powerSavingCmd(mode), 'what.saving');
   setLowBattery = (pct: number) => this.checked(lowBatteryCmd(pct), 'what.low');
+  bindLever = (source: number, target: number) => this.checked(leverBindCmd(source, target), 'what.lever');
+  enableLeverMode = (mode: number, on: boolean) => this.checked(leverEnableCmd(mode, on), 'what.lever');
   setPollingRate = (index: number) => this.checked(pollingRateCmd(index), 'what.polling');
 
   /** write that the firmware may refuse with ff aa */
@@ -108,3 +131,4 @@ export * from './keys';
 export * from './oled';
 export * from './power';
 export * from './performance';
+export * from './lever';
